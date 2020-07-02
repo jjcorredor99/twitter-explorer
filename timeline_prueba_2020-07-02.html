@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.0.2"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "data": {"name": "data-949c633291cc74e742eb96ec2217aee2"}, "mark": {"type": "line", "point": true}, "encoding": {"x": {"type": "temporal", "field": "just_date"}, "y": {"type": "quantitative", "field": "count"}}, "title": "N\u00famero de tuits en el tiempo", "$schema": "https://vega.github.io/schema/vega-lite/v4.0.2.json", "datasets": {"data-949c633291cc74e742eb96ec2217aee2": [{"just_date": "2020-04-02T00:00:00", "count": 4}, {"just_date": "2020-04-03T00:00:00", "count": 47}, {"just_date": "2020-04-04T00:00:00", "count": 49}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>
