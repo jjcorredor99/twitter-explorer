@@ -2,7 +2,7 @@
 
 Este es un paquete para explorar listas de tuits extraídas con las Apis Standard Search y Standard Stream de Twitter.
 
-Un ejemplo de cómo extraer tuits usando Standard Search se encuentra [aquí]()
+Un ejemplo de cómo extraer tuits usando Standard Search se encuentra [aquí](https://github.com/Obsdemocracia/twitter-explorer/blob/master/Extract%20tuits%20Standard%20Search.ipynb)
 Los requerimientos del paquete son:
 
 - Tweepy
@@ -31,6 +31,6 @@ Este paquete incluye funciones para:
 12. Generar una nube de palabras del texto
 13. Generar una nube de palabras de los tuits que contengan palabras clave.
 
-Un ejemplo de uso de las funciones se encuentra [aquí] ()
+Un ejemplo de uso de las funciones se encuentra [aquí](https://github.com/Obsdemocracia/twitter-explorer/blob/master/Ejemplo%20funciones%20Twitter.ipynb)
 
 La documentación completa se encuentra [aquí]
