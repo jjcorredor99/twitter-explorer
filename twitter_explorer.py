@@ -11,45 +11,73 @@ from stop_words import get_stop_words
 import matplotlib.pyplot as plt
 
 def timeline (list_of_tweets, identifier):
-	creation_dates=[tweet["created_at"] for tweet in list_of_tweets]
-	df = pd.DataFrame({'dates':creation_dates})
-	df.dates = df.dates.astype("datetime64")+ timedelta(hours=-5)
-	df['just_date'] = df['dates'].dt.date
+    """Returns a chart with the count of tweets per day and save it with the identifier
+    
+    Arguments
+    _ _ _ _ _ _ _
+    
+    list_of_tweets: dict
+        use dictionary that is returned from Twitter api 
+    identifier: str 
+        name to save the chart"""    
+    creation_dates=[tweet["created_at"] for tweet in list_of_tweets]
+    df = pd.DataFrame({'dates':creation_dates})
+    df.dates = df.dates.astype("datetime64")+ timedelta(hours=-5)
+    df['just_date'] = df['dates'].dt.date
 
-	counts= df.groupby(["just_date"]).size()
-	counts=counts.to_frame(name = 'count').reset_index()
-	counts.just_date=pd.to_datetime(counts.just_date)
-	counts.sort_values(by=['just_date'])
-	counts['just_date'] = pd.to_datetime(counts['just_date'])
+    counts= df.groupby(["just_date"]).size()
+    counts=counts.to_frame(name = 'count').reset_index()
+    counts.just_date=pd.to_datetime(counts.just_date)
+    counts.sort_values(by=['just_date'])
+    counts['just_date'] = pd.to_datetime(counts['just_date'])
 
-	chart=alt.Chart(counts).mark_line(point=True).encode(
-		x='just_date',
-		y='count'
-	).properties(
-		title='Número de tuits en el tiempo'
-	)
-	chart.save("timeline_"+identifier+"_"+str(date.today())+".html")
-	return (chart)
+    chart=alt.Chart(counts).mark_line(point=True).encode(
+        x='just_date',
+        y='count'
+    ).properties(
+        title='Número de tuits en el tiempo'
+    )
+    chart.save("timeline_"+identifier+"_"+str(date.today())+".html")
+    return (chart)
+
 
 def most_used_hashtags(list_of_tweets,n):
-	#Most used hashtags:
-	hashtags=[]
-	w_o_ht=[]
-	for tweet in list_of_tweets:
-		ht=[tweet["entities"]["hashtags"][i]["text"].lower()for i in range(0,len(tweet["entities"]["hashtags"]))]
-		
-		if len(ht)==0:
-			w_o_ht.append(tweet) 
-		else:
-			hashtags=hashtags+ht
+    """Returns a list of the most used hashtags
+    
+    Arguments
+    _ _ _ _ _ _ _
+    
+    list_of_tweets: dict
+        use dictionary that is returned from Twitter api 
+    n: int 
+        lenght of the list that will be returned"""    
+    #Most used hashtags:
+    hashtags=[]
+    w_o_ht=[]
+    for tweet in list_of_tweets:
+        ht=[tweet["entities"]["hashtags"][i]["text"].lower()for i in range(0,len(tweet["entities"]["hashtags"]))]
+        if len(ht)==0:
+            w_o_ht.append(tweet) 
+        else:
+            hashtags=hashtags+ht
 
-	c = Counter(hashtags)
-	print(c.most_common(n))
-	
-	return(c)
+    c = Counter(hashtags)
+    print(c.most_common(n))
+
+    return(c)
 
 def most_mentioned_users(list_of_tweets,n):
 	#Most mentioned users:
+	"""Returns a list of the most mentioned users
+	
+	Arguments
+	_ _ _ _ _ _ _
+	
+	list_of_tweets: dict
+        	use dictionary that is returned from Twitter api 
+	n: int 
+        	lenght of the list that will be returned"""
+	
 	mentions=[]
 	w_o_mt=[]
 	for tweet in list_of_tweets:
@@ -66,6 +94,16 @@ def most_mentioned_users(list_of_tweets,n):
 	return(c)
 
 def most_used_urls(list_of_tweets,n):
+	"""Returns a list of the most used urls
+    
+	Arguments
+	_ _ _ _ _ _ _
+
+	list_of_tweets: dict
+		use dictionary that is returned from Twitter api 
+	n: int 
+		lenght of the list that will be returned"""    
+	
 	urls=[]
 	sin_url=[]
 	n_rts=[]
@@ -87,6 +125,16 @@ def most_used_urls(list_of_tweets,n):
 	return(c)
 	
 def most_used_domains(list_of_tweets,n):
+
+	"""Returns a list of the most used domains
+    
+	Arguments
+	_ _ _ _ _ _ _
+
+	list_of_tweets: dict
+		use dictionary that is returned from Twitter api 
+	n: int 
+		lenght of the list that will be returned"""
 	urls=most_used_urls(list_of_tweets,0)
 	dominios={}
 	for url in urls.keys():
@@ -103,6 +151,16 @@ def most_used_domains(list_of_tweets,n):
 
 
 def most_retweeted_urls(list_of_tweets,n):
+	"""Returns a list of the most retweeted urls
+    
+	Arguments
+	_ _ _ _ _ _ _
+
+	list_of_tweets: dict
+		use dictionary that is returned from Twitter api 
+	n: int 
+		lenght of the list that will be returned"""
+
 	#Most mentioned urls:
 	urls={}
 	sin_url=[]
